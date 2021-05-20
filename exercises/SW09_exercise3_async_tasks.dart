@@ -4,13 +4,13 @@ import 'dart:isolate';
 
 Future<void> longLastingTask(SendPort sendPort) async {
   await Future.delayed(Duration(seconds: 3));
-  print("3000");
+  stdout.write("3000");
   sendPort.send(3000);
 }
 
 Future<void> evenLongerLastingTask(SendPort sendPort) async {
   await Future.delayed(Duration(seconds: 6));
-  print("6000");
+  stdout.write("6000");
   sendPort.send(6000);
 }
 
@@ -28,19 +28,22 @@ Completer spawnIsolate(Function(SendPort) funcToExecute) {
 }
 
 void main() async {
+  print("-> Now waiting for things to happen! ");
   var longLastingTaskFutureCompleter = spawnIsolate(longLastingTask);
-  var evenLongerLastingTaskFutureCompleter = spawnIsolate(longLastingTask);
+  var evenLongerLastingTaskFutureCompleter = spawnIsolate(evenLongerLastingTask);
 
   Future.wait([
     longLastingTaskFutureCompleter.future,
     evenLongerLastingTaskFutureCompleter.future
   ]).then((results) async {
     await Future.delayed(Duration(seconds: 2));
-    print("was waiting for ${results[0] + results[1] + 2000} ms");
+    stdout.write("was waiting for ${results[0] + results[1] + 2000} ms");
+    print("");
+    print("-> Done");
     exit(0);
   });
 
   Timer.periodic(Duration(milliseconds: 500), (timer) {
-    print(".");
+    stdout.write(".");
   });
 }
