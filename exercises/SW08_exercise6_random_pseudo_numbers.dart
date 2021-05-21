@@ -1,5 +1,3 @@
-// TODO
-
 import 'dart:math';
 
 void main() async {
@@ -11,20 +9,29 @@ void main() async {
   }
 
   var stream = randomIntStreamGenerator();
+
+  // a)
   var value = stream.where((int value) => value > 10000 && value < 12000);
   print(await value.first);
 
-  // var subscription;
-  // var index = 0;
+  // b)
+  // var filteredStream = stream
+  //     .mapIndexed((value, index) => StreamInfo(value, index))
+  //     .where((info) => info.value > 10000 && info.value < 12000);
+  // var result = await filteredStream.first;
+  // print('Found matching ${result.value} at index ${result.index}');
+}
 
-  // subscription = stream.listen((int value) {
-  //   if (value > 10000 && value < 12000) {
-  //     print('Found matching ${value} at index ${index}');
-  //     print('stopping..');
-  //     subscription.cancel();
-  //   } else {
-  //     print('wrong value ${value}');
-  //     index += 1;
-  //   }
-  // });
+class StreamInfo<E> {
+  E value;
+  int index;
+
+  StreamInfo(this.value, this.index);
+}
+
+extension IndexedStream<E> on Stream<E> {
+  Stream<T> mapIndexed<T>(T Function(E e, int i) f) {
+    var i = 0;
+    return map((e) => f(e, i++));
+  }
 }
