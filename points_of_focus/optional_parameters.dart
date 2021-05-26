@@ -7,7 +7,7 @@ void namedParameters({int? param1, int? param2}) {
   print(param2);
 }
 
-void namedRequiredParameters({required int? param1, int? param2}) {
+void namedRequiredParameters({required int param1, int? param2}) {
   print(param1);
   print(param2);
 }
@@ -32,25 +32,25 @@ void positionalAndOptionalPositionalParameters(int requiredParam,
 
 void main() {
   positionalParameters(1);
-  // positionalParameters(); --> compiler error
+  // positionalParameters(); // --> compiler error
 
   namedParameters(); // named parameters are optional by design
   namedParameters(param1: 1, param2: 2);
-  // namedParameters(1, 2); --> compiler error
+  // namedParameters(1, 2); // --> compiler error
 
   namedRequiredParameters(param1: 1);
-  namedRequiredParameters(param1: 1, param2: 2);
-  // namedRequiredParameters(); --> compiler error
+  namedRequiredParameters(param1: 1, param2: 2); // sequence of parameters does not matter -> invocation could be (param2: 2, param1: 1)
+  // namedRequiredParameters(); // --> compiler error
 
   optionalPositionalParameters();
   optionalPositionalParameters(1);
-  // optionalPositionalParameters(param: 1); --> compiler error
+  // optionalPositionalParameters(param: 1); // --> compiler error
 
   positionalAndNamedParameters(1);
   positionalAndNamedParameters(1, optionalNamedParam: 2);
-  // positionalNamedParameters(1, 2); --> compiler error
+  // positionalNamedParameters(1, 2); // --> compiler error
 
   positionalAndOptionalPositionalParameters(1);
   positionalAndOptionalPositionalParameters(1, 2);
-  // positionalAndOptionalPositionalParameters(1, optionalPositionalParam: 2); --> compiler error
+  // positionalAndOptionalPositionalParameters(1, optionalPositionalParam: 2); // --> compiler error
 }
