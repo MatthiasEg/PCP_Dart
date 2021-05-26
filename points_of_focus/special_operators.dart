@@ -12,22 +12,18 @@ class MySuperClass {
   }
 }
 
-void main() {
-  // ~/
+void arithmeticOperatorDemo() {
   print("## ~/ ##");
-  print(1 ~/ 2);
+  // ~/ = arithmetic operation. divides and returns integer.
+  print("1 ~/ 2 = ${1 ~/ 2}"); // 0
   print("");
+}
 
-  // type test is / is!
+void cascadeOperatorsDemo() {
   var myClass = MySuperClass();
-  print("## is ##");
-  print(myClass is MySuperClass);
-  print("## is! ##");
-  print(myClass is! MySuperClass);
-  print("");
 
-  // ..
   print("## .. ##");
+  // .. = cascade operations on object that is NOT null
   myClass
     ..anInt = 1
     ..aString = 'my string'
@@ -35,50 +31,70 @@ void main() {
     ..allDone();
   print("");
 
-  // ?..
   print("## ?.. ##");
+  // ?.. = cascade operations on object that might be null
   MySuperClass? myNullClass = null;
-  myNullClass
+  myNullClass // will not be executed
     ?..anInt = 1
     ..aString = 'my string'
     ..aList.add(1.0)
     ..allDone();
   print("");
+}
 
-  // &=
+void typeTestOperatorsDemo() {
+  var myClass = MySuperClass();
+  print("## is ##");
+  // is = check if object is of type
+  print("myClass is MySuperClass: ${myClass is MySuperClass}"); // true
+  print("## is! ##");
+  // is! = check if object is NOT of type
+  print("myClass is! MySuperClass: ${myClass is! MySuperClass}"); // false
+  print("");
+}
+
+void bitwiseOperatorsDemo() {
+  int a = 5;
+  int b = 7;
+
   print("## &= ##");
-  int a = 5; // 101
-  int b = 7; // 111
-  // 101 (5)
-  // 111 (7)
-  // 101 (5)
-  print(a = a & b);
-  a = 5;
-  b = 7;
-  print(a &= b);
+  // &= = bitwise AND plus assign
+  // equivalent of a = a & b
+  // 101 -> 5 in binary
+  // 111 -> 7 in binary
+  // 101 -> binary result = 5
+  print("a &= b = ${a &= b}");
   print("");
 
-  // ^=
+  // reset variables
+  a = 5;
+  b = 7;
+
+  //
   print("## ^= ##");
-  a = 5;
-  b = 7;
-  // 101 (5)
-  // 111 (7)
-  // 010 (2)
-  print(a = a ^ b);
-  a = 5;
-  b = 7;
-  print(a ^= b);
+  // ^= = bitwise XOR plus assign
+  // equivalent of a = a ^ b
+  // 101 -> 5 in binary
+  // 111 -> 7 in binary
+  // 010 -> binary result = 2
+  print("a ^= b = ${a ^= b}");
   print("");
 
-  // <<=
+  // reset variables
+  a = 5;
+  b = 7;
+
   print("## <<= ##");
-  a = 5;
-  b = 7;
-  // 101 (5)
-  // 10 1000 0000 (7 shift) -> (640)
-  print(a = a << b);
-  a = 5;
-  b = 7;
-  print(a <<= b);
+  // <<= = bitwise left shift plus assign
+  // equivalent of a = a << b
+  // 101 -> 5 in binary
+  // 10 1000 0000 -> shift left 7 = 640
+  print("a <<= b = ${a <<= b}");
+}
+
+void main() {
+  arithmeticOperatorDemo();
+  cascadeOperatorsDemo();
+  typeTestOperatorsDemo();
+  bitwiseOperatorsDemo();
 }
